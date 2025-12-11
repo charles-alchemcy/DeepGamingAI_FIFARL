@@ -27,13 +27,13 @@ class FIFA(object):
 
         # the reward meter at top right corner of game screen
         reward_screen = screen[85:130, 1650:1730]
-        i = Image.fromarray(reward_screen.astype('uint8'), 'RGB')
+        i = Image.fromarray(reward_screen.astype("uint8"), "RGB")
         try:
             ocr_result = pt.image_to_string(i)
-            ingame_reward = int(''.join(c for c in ocr_result if c.isdigit()))
+            ingame_reward = int("".join(c for c in ocr_result if c.isdigit()))
 
-            print('current reward: ' + str(self.reward))
-            print('observed reward: ' + str(ingame_reward))
+            print("current reward: " + str(self.reward))
+            print("observed reward: " + str(ingame_reward))
             if ingame_reward - self.reward > 200:
                 # if ball hits the target
                 self.reward = ingame_reward
@@ -46,10 +46,10 @@ class FIFA(object):
                 # if ball hasn't been shot yet
                 self.reward = ingame_reward
                 ingame_reward = 0
-            print('q-learning reward: ' + str(ingame_reward))
+            print("q-learning reward: " + str(ingame_reward))
         except:
             ingame_reward = -1 if self._is_over(action) else 0
-            print('exception q-learning reward: ' + str(ingame_reward))
+            print("exception q-learning reward: " + str(ingame_reward))
 
         return ingame_reward
 
@@ -66,18 +66,18 @@ class FIFA(object):
         return is_over
 
     def observe(self):
-        print('\n\nobserve')
+        print("\n\nobserve")
         # get current state s from screen using screen-grab
         screen = grab_screen(region=None)
         screen = screen[25:-40, 1921:]
 
         # if drill over, restart drill and take screenshot again
         restart_button = screen[745:775, 600:800]
-        i = Image.fromarray(restart_button.astype('uint8'), 'RGB')
+        i = Image.fromarray(restart_button.astype("uint8"), "RGB")
         restart_text = pt.image_to_string(i)
         if "RETRV DRILL" in restart_text:
             # press enter key
-            print('pressing enter, reset reward')
+            print("pressing enter, reset reward")
             self.reward = 0
             PressKey(leftarrow)
             time.sleep(0.4)
@@ -94,8 +94,8 @@ class FIFA(object):
         return state
 
     def act(self, action):
-        display_action = ['shoot_low', 'shoot_high', 'left_arrow', 'right_arrow']
-        print('action: ' + str(display_action[action]))
+        display_action = ["shoot_low", "shoot_high", "left_arrow", "right_arrow"]
+        print("action: " + str(display_action[action]))
         # [ shoot_low, shoot_high, left_arrow, right_arrow ]
         keys_to_press = [[spacebar], [spacebar], [leftarrow], [rightarrow]]
         # need to keep all keys pressed for some time before releasing them otherwise fifa considers them as accidental
