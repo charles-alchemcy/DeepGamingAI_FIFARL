@@ -6,7 +6,6 @@ from PIL import Image
 from grabscreen import grab_screen
 from directkeys import *
 
-
 class FIFA(object):
     """
     This class acts as the intermediate "API" to the actual game. Double quotes API because we are not touching the
@@ -15,7 +14,7 @@ class FIFA(object):
     """
 
     cnn_graph = CNN()
-    reward = 0
+    reward = 10
 
     def __init__(self):
         self.reset()
@@ -23,8 +22,6 @@ class FIFA(object):
     def _get_reward(self, action):
         screen = grab_screen(region=None)
         screen = screen[25:-40, 1921:]
-        screen_resized = cv2.resize(screen, (780, 480))
-
         # the reward meter at top right corner of game screen
         reward_screen = screen[85:130, 1650:1730]
         i = Image.fromarray(reward_screen.astype("uint8"), "RGB")
