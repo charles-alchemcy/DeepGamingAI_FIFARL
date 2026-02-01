@@ -14,7 +14,7 @@ class FIFA(object):
     """
 
     cnn_graph = CNN()
-    reward = 0
+    reward = 10
 
     def __init__(self):
         self.reset()
