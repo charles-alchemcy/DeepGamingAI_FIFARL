@@ -22,8 +22,6 @@ class FIFA(object):
     def _get_reward(self, action):
         screen = grab_screen(region=None)
         screen = screen[25:-40, 1921:]
-        screen_resized = cv2.resize(screen, (780, 480))
-
         # the reward meter at top right corner of game screen
         reward_screen = screen[85:130, 1650:1730]
         i = Image.fromarray(reward_screen.astype("uint8"), "RGB")
