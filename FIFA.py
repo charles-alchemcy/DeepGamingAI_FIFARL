@@ -6,7 +6,6 @@ from PIL import Image
 from grabscreen import grab_screen
 from directkeys import *
 
-
 class FIFA(object):
     """
     This class acts as the intermediate "API" to the actual game. Double quotes API because we are not touching the
